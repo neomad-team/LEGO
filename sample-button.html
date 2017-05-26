@@ -1,0 +1,47 @@
+<h1>LEGO demo</h1>
+
+<p>
+  This is an example of a <em>LEGO</em> WebComponent.
+  (Chromium / or Chrome® only for now).
+</p>
+<p>
+  Click the item below for a reactive behavior:
+</p>
+
+<sample-button value=hello></sample-button>
+<sample-button value=click></sample-button>
+<sample-button value=me></sample-button>
+<sample-button value=or></sample-button>
+<sample-button value=me></sample-button>
+
+<p>
+  <a href=index.html>Back to the demos</a>
+</p>
+
+<script src=./src/lego.js></script>
+<script>
+
+  // Custom button
+  class SampleButton extends Component {
+    watch() {return ['value']}
+
+    render() {
+      return `
+      <button>value: ${this.getAttribute('value')}!</button>
+      <style>button{cursor: pointer; font-size: 1.5em; padding: .5em 1em}</style>
+      `
+    }
+  }
+  customElements.define('sample-button', SampleButton)
+
+
+  // Global JavaScript
+
+  ;[].forEach.call(document.querySelectorAll('sample-button'), button => {
+    button.addEventListener('click', event => {
+      const items = ['paf', 'ouch', 'wow', '<em>huu</em>']
+      const item = items[Math.floor(Math.random()*items.length)]
+      event.target.setAttribute('value', item)
+    })
+  })
+</script>

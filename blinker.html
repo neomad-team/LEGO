@@ -18,7 +18,12 @@
 <demo-blinker delay=200>the nervous</demo-blinker>
 
 
+<p>
+  <a href=index.html>Back to the demos</a>
+</p>
 
+
+<script src=https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.1/webcomponents-hi-sd-ce.js></script>
 <script src=./src/lego.js></script>
 <script>
 
@@ -37,8 +42,10 @@
       return `
         ${super.render()}
         <style>
-          :host {color: ${this.value('color')};
-          transition: color ${this.value('delay')/1000}s}
+          :host {
+            color: ${this.value('color')};
+            transition: color ${this.value('delay')/1000}s;
+          }
         </style>`
     }
   }
