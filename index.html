@@ -3,6 +3,7 @@
 <p>
   This is an example of a <em>LEGO</em> WebComponent.
   (Chromium / or Chrome® only for now).
+</p>
 <p>
   Click the item below for a reactive behavior:
 </p>
@@ -13,6 +14,9 @@
 <sample-button value=or></sample-button>
 <sample-button value=me></sample-button>
 
+<p>
+  View <a href=blinker.html>the blinking demo</a>
+</p>
 
 <script src=./src/lego.js></script>
 <script>
@@ -35,7 +39,6 @@
 
   ;[].forEach.call(document.querySelectorAll('sample-button'), button => {
     button.addEventListener('click', event => {
-      console.debug('click')
       const items = ['paf', 'ouch', 'wow', '<em>huu</em>']
       const item = items[Math.floor(Math.random()*items.length)]
       event.target.setAttribute('value', item)

@@ -1,0 +1,46 @@
+<h1>LEGO blinker demo</h1>
+
+<style>
+  demo-blinker {
+    font-weight: bold;
+    font-size: 1.3em;
+    padding-right: 2em;
+  }
+</style>
+
+<p>
+  This is an example of a <em>LEGO</em> WebComponent.
+  (Chromium / or Chrome® only for now).
+</p>
+
+<demo-blinker>The blinker</demo-blinker>
+<demo-blinker delay=5000>the softer</demo-blinker>
+<demo-blinker delay=200>the nervous</demo-blinker>
+
+
+
+<script src=./src/lego.js></script>
+<script>
+
+  class DemoBlinker extends Component {
+    watch() {return ['color']}
+    defaults() {return {delay: 1000}}
+
+    connectedCallback() {
+      super.connectedCallback()
+      setInterval(_ => {
+        this.setAttribute('color', '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6))
+      }, this.value('delay'))
+    }
+
+    render() {
+      return `
+        ${super.render()}
+        <style>
+          :host {color: ${this.value('color')};
+          transition: color ${this.value('delay')/1000}s}
+        </style>`
+    }
+  }
+  customElements.define('demo-blinker', DemoBlinker)
+</script>
