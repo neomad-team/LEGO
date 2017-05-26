@@ -4,6 +4,8 @@ class Component extends HTMLElement {
     this.shadow = this.attachShadow({mode: 'open'})
   }
 
+  defaults() { return {}}
+
   static get observedAttributes() {
     return this.prototype.watch && this.prototype.watch()
   }
@@ -28,10 +30,25 @@ class Component extends HTMLElement {
     if(attribute in defaults) {
       return defaults[attribute]
     }
+    return ''
   }
 
   attributeChangedCallback(name, oldValue, value) {
     this[`${name}Changed`] && this[`${name}Changed`](value, oldValue)
     this.update()
+  }
+}
+
+class TemplateComponent extends Component {
+  render() {
+    const style = document.currentScript.ownerDocument.querySelector('style').outerHTML
+    const replaceStyle = new Function(`return \`${style}\``)
+    const template = document.currentScript.ownerDocument.querySelector('template').innerHTML
+    const replaceTemplate = new Function(`return \`${template}\``)
+
+    return `
+      ${replaceStyle.call(this)}
+      ${replaceTemplate.call(this)}
+    `
   }
 }
