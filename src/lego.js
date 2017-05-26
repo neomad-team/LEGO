@@ -5,7 +5,7 @@ class Component extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return this.prototype.watch()
+    return this.prototype.watch && this.prototype.watch()
   }
 
   connectedCallback() {
@@ -13,7 +13,21 @@ class Component extends HTMLElement {
   }
 
   update() {
-    this.shadow.innerHTML = this.render && this.render()
+    this.shadow.innerHTML = this.render()
+  }
+
+  render() {
+    return '<slot></slot>'
+  }
+
+  value(attribute) {
+    if(this.hasAttribute(attribute)) {
+      return this.getAttribute(attribute)
+    }
+    const defaults = this.defaults()
+    if(attribute in defaults) {
+      return defaults[attribute]
+    }
   }
 
   attributeChangedCallback(name, oldValue, value) {
