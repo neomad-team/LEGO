@@ -1,0 +1,23 @@
+<style>
+  x-fluffy {
+    display: inline-block;
+    color: red;
+    background: #efefef;
+    padding: 3em;
+    border: 1px dotted #ccc;
+    transition: .5s all;
+  }
+  x-fluffy:hover {
+    font-size: 1.5em;
+  }
+</style>
+
+<template>
+  <slot></slot>
+  <small>${this.value('name')}</small>
+</template>
+
+<script src=../src/lego.js></script>
+<script>
+  customElements.define('x-fluffy', TemplateComponent)
+</script>
