@@ -6,16 +6,44 @@ It comes along the [WebComponentsJS polyfill](https://github.com/webcomponents/w
 
 ## Create your element
 
+
+### Using `render()`
+
 ```html
 <my-component>Content of my component</my-component>
 <script src=./src/lego.js></script>
 <script>
   // Create your own class
-  class MyComponent extends Component {}
+  class MyComponent extends Component {
+    render() {
+      return `My component content: <slot></slot>!`
+    }
+  }
   // Enable <my-component> HTML element
   customElements.define('my-component', MyComponent)
 </script>
 ```
+
+### Using `<template>`
+
+```html
+<link rel=import href=./mycomponent.html>
+<my-component>Content of my component</my-component>
+```
+
+_mycomponent.html_:
+```html
+<template>
+  My component content: <slot></slot>!
+</template>
+
+<script src=./src/lego.js></script>
+<script>
+  class MyComponent extends TemplateComponent {}
+  customElements.define('my-component', MyComponent)
+</script>
+```
+
 
 Not much happening, but you have a custom web component!
 
@@ -26,6 +54,9 @@ When extending `Component`, you basically add some shortcuts to native HTMLEleme
 
 It's still fully compatible with native _custom elements_. No magic behind the scene,
 no complexity, just a couple of useful methods to write native web components easier.
+
+It also enables the power of using `<template>` and `<style>` with imports.
+See the [template with import demo](./fluffy.html).
 
 
 ## Available methods
@@ -40,4 +71,4 @@ default values. If the attribute is not declared, this value will be taken.
 has no value, the default value will be taken.
 
 **render()**: should return a string which is the HTML content of the component.
-If `<slot></slot>` is in the string, it will be replaced by the children of your custom element. 
+If `<slot></slot>` is in the string, it will be replaced by the children of your custom element.
